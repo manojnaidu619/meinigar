@@ -1,47 +1,77 @@
 <template lang="html">
-  <div class="test">
-    <h1>Hello</h1>
-    <div v-if="output" class="output">
-      <table>
-        <tr>
-          <th><h3>ID</h3></th>
-          <th><h3>User</h3></th>
-          <th><h3>Password</h3></th>
-        </tr>
-        <tr v-for="data in output.data">
-          <td>{{data["ID"]}}</td>
-          <td>{{data["UserName"]}}</td>
-          <td>{{data["Password"]}}</td>
-        </tr>
-      </table>
+  <div class="container">
+    <h1>Welome!</h1>
+    <div class="login-modal">
+      <label for="email">Email </label>
+      <input type="text" name="email" value="" v-model="email"><br><br>
+      <label for="password">Password </label>
+      <input type="password" name="password" value="" v-model="password"><br><br>
+      <button class="submit" :disabled="!validated" type="submit" name="button">Submit</button>
+    </div>
+    <div class="login-button">
+      <button id="login" type="button" name="button">Login</button>
+    </div>
+    <div class="signup-button">
+      <button id="signup" type="button" name="button">Signup</button>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 export default {
-    data(){
-      return{
-        output: ''
-      }
-    },
-    created(){
-      axios.get('https://fakerestapi.azurewebsites.net/api/Users')
-      .then(res => this.output = res)
-      .catch(error => console.log(error))
+  data(){
+    return{
+        email: '',
+        password: '',
+        validated: false
     }
+  },
+  computed:{
+      signale(){
+        var mailformat = /\S+@\S+\.\S+/
+        if(this.email.match(mailformat)) {
+          this.validated = true
+        }
+      }
+  }
 }
 </script>
 
 <style lang="css" scoped>
- .output{
-   margin-left: 42%;
-   margin-top: 20px;
- }
-  table,th,td{
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 5px;
+  .login-button, .signup-button{
+    margin: 150px;
+  }
+  button{
+    height: 50px;
+    background-color: orange;
+    border: none;
+    border-radius: 3px;
+    width: 120px;
+    outline: none;
+    text-align: center;
+    font-style: bold;
+    font-size: 23px;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px darkgray;
+    transition: 0.3s linear;
+  }
+  button:hover{
+    background-color: darkorange;
+    transform: scale(0.9);
+    box-shadow: none;
+  }
+  .submit{
+    transform: scale(0.7);
+  }
+  .login-modal{
+    height: 100%;
+    width: 500px;
+    padding: 15px;
+    border: 1px solid red;
+  }
+  [disabled]{
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
   }
 </style>
