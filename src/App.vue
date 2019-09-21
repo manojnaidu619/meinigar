@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <Index></Index>
-    <Login></Login>
+    <router-view></router-view>
   </div>
 </template>
 
