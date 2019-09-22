@@ -28,8 +28,13 @@ export default {
   },
   created(){
     axios.get('https://fakerestapi.azurewebsites.net/api/Users')
-    .then(res => this.output = res)
-    .catch(error => console.log(error))
+    .then(res => {this.output = res
+      var response = res.data
+          for(var i=0;i<response.length;i++){
+            localStorage.setItem(`User ${i+1}`, [response[i]["UserName"], response[i]["Password"]])
+          }
+    })
+    .catch(error => console.log(error));
   }
 }
 </script>
